@@ -15,6 +15,11 @@ const openai = new OpenAI({
 
 const DOCS = `Pegá acá tu manteca_docs.txt`;
 
+// ✅ Ruta base (evita Cannot GET /)
+app.get("/", (req, res) => {
+  res.send("Asistente Manteca activo 🚀");
+});
+
 app.post("/chat", async (req, res) => {
   try {
     const completion = await openai.chat.completions.create({
@@ -41,4 +46,9 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Server running"));
+// ✅ Puerto dinámico (clave para Render)
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
